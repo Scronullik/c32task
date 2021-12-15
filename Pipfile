@@ -7,6 +7,7 @@ name = "pypi"
 django = "*"
 mysqlclient = "*"
 python-decouple = "*"
+django-redis = "*"
 
 [dev-packages]
 
