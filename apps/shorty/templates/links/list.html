@@ -1,0 +1,14 @@
+{% if object_list %}
+<table class="link_list">
+    {% for object in object_list  %}
+    <tr class="row" data-pk="{{ object.pk }}">
+        <td class="url">{{ object.url }}</td>
+        <td class="link">{% include 'links/link.html' %}</td>
+        <td class="edit">
+            <button type="button" class="edit_button" data-action-url="{% url 'edit_link' object.link %}">Edit</button>
+        </td>
+        <td class="copy"><button type="button" class="copy_button">Copy</button> </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}

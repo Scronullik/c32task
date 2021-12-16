@@ -4,9 +4,9 @@ import random
 from django.core.cache import cache
 
 
-def get_subpart():
+def get_link():
     while True:
-        subpart = ''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase + string.digits, k=10))
-        if cache.get(subpart) is None:
+        link = ''.join(random.choices(string.ascii_uppercase + string.ascii_lowercase + string.digits, k=10))
+        if cache.get(link) is None:
             break
-    return subpart
+    return link
