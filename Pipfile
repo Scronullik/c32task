@@ -8,6 +8,7 @@ django = "*"
 mysqlclient = "*"
 python-decouple = "*"
 django-redis = "*"
+apscheduler = "*"
 
 [dev-packages]
 
