@@ -1,1 +1,18 @@
-<h1>Hello world!</h1>
+<body>
+    <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Shorten">
+    </form>
+    {% if shorty_list %}
+    <table>
+        {% for object in shorty_list  %}
+        <tr>
+          <td>{{ object.url }}</td>
+          <td><a href="{% url 'redirect_to_url' object.subpart %}" target="_blank">{% url 'redirect_to_url' object.subpart %}</a></td>
+          <td> <button type="button">Copy</button> </td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% endif %}
+</body>

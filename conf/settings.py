@@ -133,9 +133,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': config('REDIS_LOCATION', default='redis://django@localhost:6379/redis_db_c32task'),
+        'LOCATION': config('REDIS_LOCATION', default='redis://localhost:6379'),
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'CACHE_HERD_TIMEOUT': 1209600
         }
     }
 }
+
+SESSION_COOKIE_AGE = 60
