@@ -1,6 +1,6 @@
 from django.db import models
-from django.dispatch import receiver
 from django.core.cache import cache
+from django.core.validators import MinLengthValidator, RegexValidator
 from django.contrib.sessions.models import Session
 
 from .utils import get_link
@@ -8,7 +8,9 @@ from .utils import get_link
 
 class Shorty(models.Model):
     session = models.ForeignKey(Session, on_delete=models.CASCADE, db_column='session_key')
-    link = models.CharField(max_length=10, null=False, blank=False, unique=True)
+    link = models.CharField(max_length=10, null=False, blank=False, unique=True,
+                            validators=[MinLengthValidator(5),
+                                        RegexValidator('^[A-Za-z0-9]+$', message='Link must be letters and numbers.')])
     url = models.URLField(null=False, blank=False)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
