@@ -86,7 +86,7 @@ function updateUrlList() {
     let $linkListSegment = $('#link_list_segment');
     let params = {};
     const page = getParam('page');
-    if (page == 1) {
+    if (!page || page == 1) {
         deleteParamURL('page');
     }
     else {
