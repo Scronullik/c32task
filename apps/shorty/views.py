@@ -33,6 +33,10 @@ class CreateLinkView(generic.CreateView):
     template_name = 'forms/create_link.html'
 
     def form_valid(self, form):
+        """
+        Проверяем создана ли сессия пользователя. Если нет, то создаём.
+        Передаём существующую сессию в instance формы для дальнейшего сохранения в модели.
+        """
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
         form.instance.session = self.request.session._get_session_from_db()
@@ -56,10 +60,13 @@ class UpdateLinkView(generic.UpdateView):
 class RedirectToUrlView(generic.RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
-        kwargs.clear()
+        """
+        Получаем url из кэша и перенаправляем. Если url не сохранён в кэше, перенаправляем на home page.
+        """
         url = cache.get(self.kwargs.get('link'))
         if url:
             return url
         else:
+            kwargs.clear()
             self.pattern_name = 'index'
             return super().get_redirect_url(*args, **kwargs)

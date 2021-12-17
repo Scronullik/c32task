@@ -1,12 +1,9 @@
 from django import forms
-from django.core.cache import cache
 
 from .models import Shorty
-# from .utils import get_link
 
 
 class CreateLinkForm(forms.ModelForm):
-
     class Meta:
         model = Shorty
         fields = ('url', )
@@ -16,11 +13,6 @@ class CreateLinkForm(forms.ModelForm):
         widgets = {
             'url': forms.URLInput(attrs={'placeholder': 'Shorten your link'}),
         }
-
-    def save(self, commit=True):
-        self.instance = super().save(commit=commit)
-        cache.set(self.instance.link, self.instance.url)
-        return self.instance
 
 
 class EditLinkForm(forms.ModelForm):

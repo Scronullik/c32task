@@ -134,7 +134,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': config('REDIS_LOCATION', default='redis://localhost:6379'),
-        'TIMEOUT': 1209600,
+        'TIMEOUT': 1296000,  # 15 days
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient'
         },
@@ -143,7 +143,7 @@ CACHES = {
 
 # sessions
 
-SESSION_COOKIE_AGE = 1209600
+SESSION_COOKIE_AGE = 1209600  # two weeks
 
 # logging
 

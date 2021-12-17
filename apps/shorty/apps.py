@@ -1,10 +1,14 @@
 from django.apps import AppConfig
 
+from .tasks import cleanup_sessions
+
 
 class ShortyConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'apps.shorty'
 
     def ready(self):
-        from .tasks import cleanup_sessions
+        """
+        Запуск периодической задачи очистки устаревших сессий
+        """
         cleanup_sessions()
