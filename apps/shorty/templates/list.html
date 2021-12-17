@@ -3,11 +3,17 @@
         {% for object in object_list  %}
         <tr class="row" data-pk="{{ object.pk }}">
             <td class="url">{{ object.url }}</td>
-            <td class="link">{% include 'links/link.html' %}</td>
+            <td class="link">
+                {% with view.request.get_host as host %}
+                    <a href="{{ host }}{% url 'redirect_to_url' object.link %}" target="_blank">{{ host }}{% url 'redirect_to_url' object.link %}</a>
+                {% endwith %}
+            </td>
             <td class="edit">
                 <button type="button" class="edit_link_button" data-action-url="{% url 'edit_link' object.link %}">Edit</button>
             </td>
-            <td class="copy"><button type="button" class="copy_link_button">Copy</button> </td>
+            <td class="copy">
+                <button type="button" class="copy_link_button">Copy</button>
+            </td>
         </tr>
         {% endfor %}
     </table>

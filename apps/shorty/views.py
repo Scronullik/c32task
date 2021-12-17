@@ -21,7 +21,7 @@ class LinkListVIew(generic.ListView):
     model = Shorty
     ordering = '-updated'
     paginate_by = 10
-    template_name = 'links/list.html'
+    template_name = 'list.html'
 
     def get_queryset(self):
         return super().get_queryset().filter(session__session_key=self.request.session.session_key)
