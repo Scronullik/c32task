@@ -59,7 +59,7 @@ class RedirectToUrlView(generic.RedirectView):
         kwargs.clear()
         url = cache.get(self.kwargs.get('link'))
         if url:
-            self.url = url
+            return url
         else:
             self.pattern_name = 'index'
-        return super().get_redirect_url(*args, **kwargs)
+            return super().get_redirect_url(*args, **kwargs)
