@@ -1,4 +1,5 @@
 from django.db import models
+from django.dispatch import receiver
 from django.core.cache import cache
 from django.contrib.sessions.models import Session
 
@@ -16,9 +17,20 @@ class Shorty(models.Model):
         return f'{self.subpart} - {self.url}'
 
     def save(self, *args, **kwargs):
-        create = not self.pk
-        if create:
+        created = self.pk is None
+        if created:
             self.link = get_link()
         super().save(*args, *kwargs)
-        if create:
+        if created:
             cache.set(self.link, self.url)
+        elif hasattr(self, '_old_values'):
+            old_link = self._old_values['link']
+            if self.link != old_link and cache.has_key(old_link):
+                cache.delete(old_link)
+                cache.set(self.link, self.url)
+
+    @classmethod
+    def from_db(cls, db, field_names, values):
+        instance = super().from_db(db, field_names, values)
+        instance._old_values = dict(zip(field_names, values))
+        return instance
