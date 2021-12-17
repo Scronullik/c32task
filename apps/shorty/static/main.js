@@ -4,21 +4,13 @@ $(document).ready(function () {
     updateUrlList();
 });
 
-$(document).on('click', '.copy_link_button', function (e) {
+$(document).on('click', '.copy button[type="button"]', function (e) {
     e.preventDefault();
     let $element = $(this);
     navigator.clipboard.writeText($element.closest('.row').find('.link').children('a').attr('href'));
 });
 
-$(document).on('click', '.cancel_edit_link_button', function (e) {
-    e.preventDefault();
-    let $element = $(this);
-    $element.closest('.row').find('.link').children('a').show();
-    $element.closest('#edit_link_form').remove();
-    $('.edit').show();
-});
-
-$(document).on('click', '.edit_link_button', function (e) {
+$(document).on('click', '.edit button[type="button"]', function (e) {
     e.preventDefault();
     let $element = $(this);
     $.ajax({
@@ -28,6 +20,14 @@ $(document).on('click', '.edit_link_button', function (e) {
             initialEditLinkForm($element, responseText);
         },
     });
+});
+
+$(document).on('click', '#edit_link_form .cancel_button', function (e) {
+    e.preventDefault();
+    let $element = $(this);
+    $element.closest('.row').find('.link').children('a').show();
+    $element.closest('#edit_link_form').remove();
+    $('.edit').show();
 });
 
 
@@ -77,8 +77,8 @@ function formsHundler(element, e) {
 
 function initialEditLinkForm($element, responseText) {
     let $link = $element.closest('.row').find('.link');
-    $link.children('a').hide();
     $link.append(responseText);
+    $link.children('a').hide();
     $('.edit').hide();
 }
 

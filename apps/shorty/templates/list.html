@@ -9,10 +9,10 @@
                 {% endwith %}
             </td>
             <td class="edit">
-                <button type="button" class="edit_link_button" data-action-url="{% url 'edit_link' object.link %}">Edit</button>
+                <button type="button" data-action-url="{% url 'edit_link' object.link %}">Edit</button>
             </td>
             <td class="copy">
-                <button type="button" class="copy_link_button">Copy</button>
+                <button type="button">Copy</button>
             </td>
         </tr>
         {% endfor %}
