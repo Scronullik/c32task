@@ -141,4 +141,61 @@ CACHES = {
     }
 }
 
+# sessions
+
 SESSION_COOKIE_AGE = 1209600
+
+# logging
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(name)-12s %(levelname)-8s %(message)s'
+        },
+        'file': {
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console'
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'file',
+            'filename': 'debug.log'
+        }
+    },
+    'loggers': {
+        '': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'file'],
+            'propagate': True
+        },
+        'django': {
+            'level': 'INFO',
+            'propagate': False,
+            'handlers': ['console', 'file']
+        },
+        'django.request': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'file']
+        },
+        'django.server': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'file']
+        },
+        'django.template': {
+            'level': 'ERROR',
+            'handlers': ['console', 'file']
+        },
+        'django.db.backends': {
+            'level': 'ERROR',
+            'handlers': ['console', 'file']
+        }
+    }
+}
