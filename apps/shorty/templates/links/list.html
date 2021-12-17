@@ -12,12 +12,12 @@
         {% endfor %}
     </table>
     {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}" class=".previous_page">&lt; Previous</a>
+        <a href="?page={{ page_obj.previous_page_number }}" class=".previous_page">&lt;&lt; Previous</a>
         &nbsp;&nbsp;|&nbsp;&nbsp;
     {% endif %}
     {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
     {% if page_obj.has_next %}
         &nbsp;&nbsp;|&nbsp;&nbsp;
-        <a href="?page={{ page_obj.next_page_number }}" class=".next_page">Next &gt;</a>
+        <a href="?page={{ page_obj.next_page_number }}" class=".next_page">Next &gt;&gt;</a>
     {% endif %}
 {% endif %}
