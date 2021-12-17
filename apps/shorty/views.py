@@ -4,7 +4,6 @@ from django.views import generic
 
 from .models import Shorty
 from .forms import CreateLinkForm, EditLinkForm
-from .utils import get_link
 
 
 class HomeView(generic.TemplateView):
@@ -20,7 +19,8 @@ class HomeView(generic.TemplateView):
 
 class LinkListVIew(generic.ListView):
     model = Shorty
-    ordering = '-timestamp'
+    ordering = '-updated'
+    paginate_by = 10
     template_name = 'links/list.html'
 
     def get_queryset(self):
@@ -39,7 +39,7 @@ class CreateLinkView(generic.CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('index')
+        return reverse('create_link')
 
 
 class UpdateLinkView(generic.UpdateView):
@@ -50,7 +50,7 @@ class UpdateLinkView(generic.UpdateView):
     template_name = 'forms/edit_link.html'
 
     def get_success_url(self):
-        return reverse('load_link_list')
+        return reverse('edit_link', kwargs={'link': self.object.link})
 
 
 class RedirectToUrlView(generic.RedirectView):
