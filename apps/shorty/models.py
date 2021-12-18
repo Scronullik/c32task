@@ -19,7 +19,7 @@ class Shorty(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.subpart} - {self.url}'
+        return f'{self.link} - {self.url}'
 
     def clean(self):
         if self.link == 'admin':
@@ -31,7 +31,7 @@ class Shorty(models.Model):
         """
         К сожалёнию, плагин django-redis не реализует комманду редиса RENAME.
         Поэтому после изменения ссылки необходимо удалить старую ссылку из кэша,
-        а затем добавить в кэш новую. В функции реализуются все работы по сохранению ссылок в кэше Redis.
+        а затем добавить в кэш новую. В этой функции реализуются все работы по сохранению ссылок в кэше Redis.
         """
         created = self.pk is None
         super().save(*args, *kwargs)
@@ -42,7 +42,7 @@ class Shorty(models.Model):
             old_link = self._old_values['link']
             if self.link != old_link and cache.has_key(old_link):  # проверяем изменилась ли старая ссылка
                 cache.delete(old_link)  # удаляем её
-                logging.info(f'Old link {old_link} was deleted from Redis.')
+                logging.info(f'key [link: {old_link}] was deleted from cache of Redis.')
 
         if not cache.has_key(self.link):  # проверяем существует ли ссылка в кэша
             cache.set(self.link, self.url)  # если нет, то сохраняем ссылки и юрлы в кэше

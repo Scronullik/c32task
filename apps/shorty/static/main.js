@@ -1,7 +1,7 @@
 
 
 $(document).ready(function () {
-    updateUrlList();  // при загрузки home page выполняем ajax чтобы подгрузить список существующих ссылок
+    updateUrlList();  // при загрузке home page выполняем ajax чтобы подгрузить список существующих ссылок
 });
 
 $(document).on('click', '.copy button[type="button"]', function (e) {
@@ -85,7 +85,7 @@ function formsHundler(element, e) {
 function initialEditLinkForm($element, responseText) {
     let $link = $element.closest('.row').find('.link');
     $link.append(responseText);
-    $link.children('a').hide();  // скрываем ссылку (будет видна в форме)
+    $link.children('a').hide();  // скрываем ссылку (будет видна в форме редактирования ссылки)
     $('.edit').hide();  // скрываем все кнопки редактирования на момент редактирования текущей ссылки
 }
 
@@ -128,7 +128,7 @@ function getParam(key, url = location.href) {
 /**
  * based code on https://github.com/Scronullik/whatyouknow/blob/8de31ff095141c850e33349d8a47cb4cf3e6be0a/apps/core/static/core/js/urls.js#L85
  * Функция удаляет текущий парамер из юрла по ключу. Если параметров несколько (например: "?tag=t_1&tag=t_2") возможно удаление по значению paramValue.
- * Если paramValue не указан, будет удалёны все параметры по ключу paramValue. 
+ * Если paramValue не указан, будет удалёны все параметры по ключу paramKey.
  * @param {string} paramKey 
  * @param {*} paramValue 
  * @param {string} url 
