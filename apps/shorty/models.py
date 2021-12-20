@@ -29,27 +29,25 @@ class Shorty(models.Model):
 
     def save(self, *args, **kwargs):
         """
-        К сожалёнию, плагин django-redis не реализует комманду редиса RENAME.
-        Поэтому после изменения ссылки необходимо удалить старую ссылку из кэша,
-        а затем добавить в кэш новую. В этой функции реализуются все работы по сохранению ссылок в кэше Redis.
+        This function implements all the work on saving links in the Redis cache.
         """
         created = self.pk is None
-        super().save(*args, *kwargs)
+        super().save(*args, **kwargs)
         operation = 'created' if created else 'updated'
         logging.info(f'link: {self.link} - url: {self.url} was {operation}.')
 
-        if not created and hasattr(self, '_old_values'):  # после изменения модели
+        if not created and hasattr(self, '_old_values'):  # after changed the model
             old_link = self._old_values['link']
-            if self.link != old_link and cache.has_key(old_link):  # проверяем изменилась ли старая ссылка
-                cache.delete(old_link)  # удаляем её
+            if self.link != old_link and cache.has_key(old_link):  # check if the old link has changed
+                cache.delete(old_link)  # delete it
                 logging.info(f'key [link: {old_link}] was deleted from cache of Redis.')
 
-        if not cache.has_key(self.link):  # проверяем существует ли ссылка в кэша
-            cache.set(self.link, self.url)  # если нет, то сохраняем ссылки и юрлы в кэше
+        if not cache.has_key(self.link):  # check if the link exists in the cache
+            cache.set(self.link, self.url)  # if not, then saving links and urls in the cache
             logging.info(f'key [link: {self.link} - value [url: {self.url}] was cached in Redis.')
 
     @classmethod
     def from_db(cls, db, field_names, values):
         instance = super().from_db(db, field_names, values)
-        instance._old_values = dict(zip(field_names, values))  # сохраним старые значения
+        instance._old_values = dict(zip(field_names, values))  # saving old values
         return instance

@@ -9,6 +9,6 @@ class ShortyConfig(AppConfig):
 
     def ready(self):
         """
-        Запуск периодической задачи очистки устаревших сессий
+        Starting the periodic task of clearing expired sessions
         """
         cleanup_sessions()

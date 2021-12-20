@@ -6,7 +6,7 @@ from .models import Shorty
 class CreateLinkForm(forms.ModelForm):
     class Meta:
         model = Shorty
-        fields = ('url', )
+        fields = ('url',)
         labels = {
             'url': '',
         }
@@ -23,5 +23,5 @@ class EditLinkForm(forms.ModelForm):
             'link': '',
         }
         widgets = {
-            'link': forms.TextInput(attrs={'placeholder': 'your link'})
+            'link': forms.TextInput(attrs={'placeholder': 'your link'}),
         }

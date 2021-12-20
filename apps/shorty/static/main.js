@@ -1,7 +1,7 @@
 
 
 $(document).ready(function () {
-    updateUrlList();  // при загрузке home page выполняем ajax чтобы подгрузить список существующих ссылок
+    updateUrlList();  // when loading the home page, it will run ajax to load the list of existing links
 });
 
 $(document).on('click', '.copy button[type="button"]', function (e) {
@@ -13,7 +13,7 @@ $(document).on('click', '.copy button[type="button"]', function (e) {
 $(document).on('click', '.edit button[type="button"]', function (e) {
     e.preventDefault();
     let $element = $(this);
-    $.ajax({  // загружаем форму редактирования ссылки
+    $.ajax({  // loading the link editing form
         type: 'get',
         url: $element.data('action-url'),
         success: function (responseText) {
@@ -25,9 +25,9 @@ $(document).on('click', '.edit button[type="button"]', function (e) {
 $(document).on('click', '#edit_link_form .cancel_button', function (e) {
     e.preventDefault();
     let $element = $(this);
-    $element.closest('.row').find('.link').children('a').show();  // показываем текущую ссылку
-    $element.closest('#edit_link_form').remove();  // удаляем форму редактирования
-    $('.edit').show();  // показываем все кнопки редатирования, которые были скрыты из-за редактирования текущей ссылки
+    $element.closest('.row').find('.link').children('a').show();  // show current link
+    $element.closest('#edit_link_form').remove();  // remove the link editing form
+    $('.edit').show();  // show all edit buttons that were hidden due to editing the current link
 });
 
 
@@ -51,7 +51,7 @@ $(document).on('click', '.next_page', function (e) {
 });
 
 /**
- * Функция-обработчик форм
+ * Form handler function
  */
 function formsHundler(element, e) {
     e.preventDefault();
@@ -63,9 +63,9 @@ function formsHundler(element, e) {
         success: function (responseText) {
 
             const formID = $element.attr('id');
-            const isErrors = responseText.includes('error');  // проверяем форму на наличие ошибок
+            const isErrors = responseText.includes('error');  // check the form for errors
 
-            // всегда добаляем/обноляем формы
+            // always add/update forms
             if (formID === 'create_link_form') {
                 $('#create_link_form_segment').html(responseText);
             }
@@ -74,23 +74,26 @@ function formsHundler(element, e) {
                 $element.remove();
             }
 
-            if (!isErrors) {  // если после отправки формы и ответа, ошибок в формах нету
+            if (!isErrors) {  // if there are no errors in the forms after sending the form and response
                 deleteParamURL('page');
-                updateUrlList();  // обновляем список ссылок
+                updateUrlList();  // link list update
             }
         },
     });
 };
 
+/**
+ * The function performs actions after loading the link editing form
+ */
 function initialEditLinkForm($element, responseText) {
     let $link = $element.closest('.row').find('.link');
-    $link.append(responseText);
-    $link.children('a').hide();  // скрываем ссылку (будет видна в форме редактирования ссылки)
-    $('.edit').hide();  // скрываем все кнопки редактирования на момент редактирования текущей ссылки
+    $link.append(responseText);  // add form
+    $link.children('a').hide();  // hide the current link (will be visible in the form of editing the link)
+    $('.edit').hide();  // hide all edit buttons at the time of editing the current link
 }
 
 /**
- * Функция загружает или обновленяет список существующих ссылок
+ * The function loads or updates the list of existing links
  */
 function updateUrlList() {
     let $linkListSegment = $('#link_list_segment');
@@ -127,8 +130,9 @@ function getParam(key, url = location.href) {
 
 /**
  * based code on https://github.com/Scronullik/whatyouknow/blob/8de31ff095141c850e33349d8a47cb4cf3e6be0a/apps/core/static/core/js/urls.js#L85
- * Функция удаляет текущий парамер из юрла по ключу. Если параметров несколько (например: "?tag=t_1&tag=t_2") возможно удаление по значению paramValue.
- * Если paramValue не указан, будет удалёны все параметры по ключу paramKey.
+ * The function removes the current parameter from the url by key.
+ * If there are several parameters (for example: "?tag=t_1&tag=t_2") it is possible to delete by paramValue value.
+ * If paramValue is not specified, all parameters by paramKey key will be deleted.
  * @param {string} paramKey 
  * @param {*} paramValue 
  * @param {string} url 

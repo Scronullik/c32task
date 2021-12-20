@@ -5,10 +5,10 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 def cleanup_sessions():
     """
-    Функция выполняющая запуск задачи переодической очистки устаревших сессий.
-    Сессии очищаются путём запуска встроенной комманды django: ./manage.py clearsession.
-    Возраст сессий задаётся в параметре SESSION_COOKIE_AGE настроек проекта.
-    Это не очищает кэш redis. Кэш redis очищается по TTL.
+    This function which performs the task of periodically clearing expired sessions.
+    Sessions are cleared by running django's built-in command: ./manage.py clearsession.
+    The age of the session is set in the SESSION_COOKIE_AGE parameter of the project's settings.
+    This does not clear the redis cache. The redis cache is cleared by TTL.
     """
     def task():
         """Cleanup expired sessions by using Django management command."""

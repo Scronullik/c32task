@@ -6,7 +6,7 @@ from django.core.cache import cache
 
 def get_link(k=10):
     """
-    Функция генерации рандомной ссылки. Уникальность ссылки проверяется через кэш.
+    This function generates random links. The uniqueness of the link is checked through the cache.
     """
     while True:
         link = ''.join(random.choices(string.ascii_lowercase + string.ascii_uppercase + string.digits, k=k))
