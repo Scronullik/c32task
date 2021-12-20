@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'apps.shorty'
 ]
 
@@ -128,6 +129,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 # caches
 
 CACHES = {
@@ -141,9 +143,11 @@ CACHES = {
     }
 }
 
+
 # sessions
 
 SESSION_COOKIE_AGE = 1209600  # two weeks
+
 
 # logging
 
@@ -198,4 +202,13 @@ LOGGING = {
             'handlers': ['console', 'file']
         }
     }
+}
+
+
+# rest
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
 }

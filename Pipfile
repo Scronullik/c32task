@@ -9,6 +9,7 @@ mysqlclient = "*"
 python-decouple = "*"
 django-redis = "*"
 apscheduler = "*"
+django-rest-framework = "*"
 
 [dev-packages]
 
