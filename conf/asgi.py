@@ -1,5 +1,5 @@
 """
-ASGI config for c32task project.
+ASGI config for shorty_django project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 

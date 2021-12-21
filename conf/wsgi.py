@@ -1,5 +1,5 @@
 """
-WSGI config for c32task project.
+WSGI config for shorty_django project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
