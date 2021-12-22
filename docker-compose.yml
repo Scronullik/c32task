@@ -1,0 +1,37 @@
+version: '3.9'
+services:
+  db:
+    image: mysql:8.0.27
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: '${DB_NAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+    restart: always
+    healthcheck:
+      test: mysqladmin ping --user=root --password='{$DB_PASSWORD}'
+      interval: 10s
+      timeout: 2s
+      retries: 10
+    volumes:
+      - ./volumes/db:/var/lib/mysql
+  cache:
+    image: 'redis:6.2.6'
+    ports:
+      - '6379:6379'
+    restart: always
+    command: ['redis-server', '--appendonly', 'yes']
+    volumes:
+      - ./volumes/cache/:/data
+  web:
+    build: .
+    ports:
+      - 8000:8000
+    depends_on:
+      db:
+        condition: service_healthy
+      cache:
+        condition: service_started
+    env_file: .env
+    entrypoint: ['sh', './run-server.sh']

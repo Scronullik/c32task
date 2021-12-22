@@ -133,3 +133,6 @@ dmypy.json
 
 # logging
 *.log
+
+# docker
+volumes/
