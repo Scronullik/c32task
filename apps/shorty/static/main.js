@@ -79,6 +79,9 @@ function formsHundler(element, e) {
                 updateUrlList();  // link list update
             }
         },
+        error: function (xhr, textStatus, errorThrown) {
+            errorLog(xhr, textStatus, errorThrown);
+        },
     });
 };
 
@@ -112,9 +115,17 @@ function updateUrlList() {
         success: function (responseText) {
             $linkListSegment.html(responseText);
         },
+        error: function (xhr, textStatus, errorThrown) {
+            deleteParamURL('page');
+            errorLog(xhr, textStatus, errorThrown);
+        },
     });
 };
 
+function errorLog(xhr, textStatus, errorThrown)
+{
+    console.log(xhr.status + " | " + xhr.statusText);
+}
 
 /**
  * based code on https://github.com/Scronullik/whatyouknow/blob/8de31ff095141c850e33349d8a47cb4cf3e6be0a/apps/core/static/core/js/urls.js#L31
