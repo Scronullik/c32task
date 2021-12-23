@@ -1,6 +1,6 @@
 # Shorty.
 
-This is a demo project of the link reduction service.
+This is a demo project of the link shortening service.
 
 ## Dependencies
 
@@ -63,4 +63,13 @@ python manage.py collectstatic
 
 ```
 python manage.py runserver
+```
+
+## Running with Docker
+
+To run in a container with all dependencies, download and install [Docker](https://www.docker.com/products/docker-desktop). Then run the command in a terminal:
+
+```
+cd shorty_django
+docker-compose up
 ```
