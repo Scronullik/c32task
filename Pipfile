@@ -4,12 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
+django = ">=4.0"
 mysqlclient = "*"
 python-decouple = "*"
-django-redis = "*"
 apscheduler = "*"
 django-rest-framework = "*"
+redis = "*"
 
 [dev-packages]
 
